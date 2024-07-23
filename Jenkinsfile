@@ -1,21 +1,21 @@
+@Library('my-library') _
 pipeline{
     agent any
     stages{
-        stage('Build-feature'){
+        stage('Build-main'){
             when{
-                branch "feature"
+                branch "main"
             }
             steps {
-                sh 'npm ci'
-                sh 'npm run build'
+                buildProject()
             }
         }
-        stage('Deploy-feature'){
+        stage('Deploy-main'){
             when{
-                branch "feature"
+                branch "main"
             }
             steps {
-                sh 'cp -r /var/lib/jenkins/workspace/demo/build /var/www/'
+               deployProject('/var/www/')  
             }
         }
         stage('Build-dev'){
@@ -23,8 +23,7 @@ pipeline{
                 branch "dev"
             }
             steps {
-                sh 'npm ci'
-                sh 'npm run build'
+                buildProject()
             }
         }
         stage('Deploy-dev'){
@@ -32,7 +31,7 @@ pipeline{
                 branch "dev"
             }
             steps {
-                sh 'cp -r /var/lib/jenkins/workspace/demo/build /var/www/'
+                deployProject('/var/www/')
             }
         }
         
