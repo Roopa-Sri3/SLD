@@ -34,6 +34,22 @@ pipeline{
                 deployProject('/var/www/')
             }
         }
+        stage('Build-feature'){
+            when{
+                branch "feature"
+            }
+            steps {
+                buildProject()
+            }
+        }
+        stage('Deploy-feature'){
+            when{
+                branch "feature"
+            }
+            steps {
+                deployProject('/var/www/')
+            }
+        }
         
     }
 }
